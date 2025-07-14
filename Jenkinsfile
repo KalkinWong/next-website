@@ -1,18 +1,30 @@
 pipeline {
     agent any
+    tools {
+        nodejs 'NodeJS-16' // 确保与全局配置一致
+    }
     stages {
-        stage('Build') { 
+        stage('Checkout') {
             steps {
-                sh 'echo "Building - start install"'
-                sh 'npm install' 
+                checkout scm
+            }
+        }
+        stage('Build') {
+            steps {
+                sh 'npm install'
+                sh 'npm run build' // 如果有build脚本
             }
         }
     }
     post {
-        always{
-            steps{
-                echo 'always'
-            }
+        always {
+            echo 'Pipeline completed'
+        }
+        success {
+            echo 'Build succeeded!'
+        }
+        failure {
+            echo 'Build failed!'
         }
     }
 }
