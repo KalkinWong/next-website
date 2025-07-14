@@ -1,7 +1,7 @@
 pipeline {
     agent any
     tools {
-        nodejs 'NodeJS-16' // 确保与全局配置一致
+        nodejs 'NodeJS 24.4.0'
     }
     stages {
         stage('Checkout') {
@@ -12,8 +12,7 @@ pipeline {
         stage('Build') {
             steps {
                 sh 'npm install'
-                sh 'npm run build' // 如果有build脚本
-            }
+                sh 'npm run build'
         }
     }
     post {
